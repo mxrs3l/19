@@ -1,4 +1,4 @@
-const YT_GIFT_URL = "https://youtu.be/your_video_here";
+const SECRET_CODE = "19";
 
 const quizData = [
   {
@@ -89,11 +89,30 @@ function showResult() {
   resultDiv.classList.remove("hidden");
 
   if (correctAnswers === quizData.length) {
-    giftLink.href = YT_GIFT_URL;
+    giftLink.addEventListener("click", showPopup);
     confetti();
   } else {
     resultDiv.innerHTML = "<h2>Пон, забыла, но ладно</h2><p>Попробуй ещё раз 💌</p><button class='next-btn' onclick='location.reload()'>Заново</button>";
   }
+}
+
+function showPopup(e) {
+  e.preventDefault();
+
+  const popup = document.createElement("div");
+  popup.className = "popup";
+
+  popup.innerHTML = `
+    <div class="popup-content">
+      <h2>🎁 Твой подарок у официанта 🎁</h2>
+      <p>Кодовое слово: <strong>${SECRET_CODE}</strong></p>
+      <button class="next-btn" id="closePopup">Закрыть</button>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  document.getElementById("closePopup").onclick = () => popup.remove();
 }
 
 function confetti() {
